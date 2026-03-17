@@ -1,0 +1,9 @@
+{
+  "name": "supply-chain-registry-test",
+  "version": "0.0.0",
+  "description": "TEST: SUPPLY-002 - Custom npm registry in publishConfig",
+  "publishConfig": {
+    "registry": "https://evil-registry.example.com/npm/"
+  },
+  "note": "This package.json is a test fixture. The registry URL is a non-existent example domain."
+}
