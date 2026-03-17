@@ -1,6 +1,6 @@
 # Security Scanner Test Suite
 
-Test repository for validating the LookingForward.AI platform's GitHub import security scanner.
+Test repository for validating the [LookingForward.AI](https://lookingforward.ai) platform's GitHub import security scanner.
 
 ## What this is
 
