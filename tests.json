@@ -1,0 +1,166 @@
+{
+  "name": "security-test",
+  "description": "Test repository for validating GitHub import security scanner. Each test case contains a harmless signature that should trigger a specific detection category.",
+  "testCases": [
+    {
+      "id": "OBF-001",
+      "category": "obfuscation",
+      "description": "eval() with atob() base64 decoding",
+      "file": "test-cases/obfuscation-eval-atob.js",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "OBF-002",
+      "category": "obfuscation",
+      "description": "String.fromCharCode with 20+ arguments",
+      "file": "test-cases/obfuscation-fromcharcode.js",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "OBF-003",
+      "category": "obfuscation",
+      "description": "Long base64-encoded string literal (>500 chars)",
+      "file": "test-cases/obfuscation-long-base64.js",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "CMD-001",
+      "category": "malicious_command",
+      "description": "rm -rf / destructive filesystem command",
+      "file": "test-cases/malicious-rm-rf.sh",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "CMD-002",
+      "category": "malicious_command",
+      "description": "Reverse shell pattern (bash -i with IP)",
+      "file": "test-cases/malicious-reverse-shell.sh",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "CMD-003",
+      "category": "malicious_command",
+      "description": "Download-and-execute (curl | bash)",
+      "file": "test-cases/malicious-curl-bash.sh",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "CMD-004",
+      "category": "malicious_command",
+      "description": "Crypto miner reference (stratum+tcp / xmrig)",
+      "file": "test-cases/malicious-cryptominer.js",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "CMD-005",
+      "category": "malicious_command",
+      "description": "Keylogger indicator pattern",
+      "file": "test-cases/malicious-keylogger.js",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "HARM-001",
+      "category": "harmful_function",
+      "description": "process.env harvesting sent via fetch",
+      "file": "test-cases/harmful-env-exfil.js",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "HARM-002",
+      "category": "harmful_function",
+      "description": "Credential stealing pattern (password + fs.write)",
+      "file": "test-cases/harmful-credential-steal.js",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "HARM-003",
+      "category": "harmful_function",
+      "description": "File system attack outside project (/etc/passwd)",
+      "file": "test-cases/harmful-fs-attack.js",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "SUPPLY-001",
+      "category": "supply_chain",
+      "description": "Suspicious postinstall script in package.json",
+      "file": "test-cases/supply-chain-postinstall/package.json",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "SUPPLY-002",
+      "category": "supply_chain",
+      "description": "Custom npm registry in publishConfig",
+      "file": "test-cases/supply-chain-registry/package.json",
+      "expectedSeverity": "warning",
+      "shouldBlock": false
+    },
+    {
+      "id": "SUPPLY-003",
+      "category": "supply_chain",
+      "description": "Makefile with curl | bash download-and-execute",
+      "file": "test-cases/supply-chain-makefile/Makefile",
+      "expectedSeverity": "critical",
+      "shouldBlock": true
+    },
+    {
+      "id": "SECRET-001",
+      "category": "secret",
+      "description": "AWS access key (AKIA pattern)",
+      "file": "test-cases/secret-aws-key.js",
+      "expectedSeverity": "warning",
+      "shouldBlock": false
+    },
+    {
+      "id": "SECRET-002",
+      "category": "secret",
+      "description": "Generic API key assignment",
+      "file": "test-cases/secret-api-key.js",
+      "expectedSeverity": "warning",
+      "shouldBlock": false
+    },
+    {
+      "id": "SECRET-003",
+      "category": "secret",
+      "description": "Private key (PEM format)",
+      "file": "test-cases/secret-private-key.js",
+      "expectedSeverity": "warning",
+      "shouldBlock": false
+    },
+    {
+      "id": "SECRET-004",
+      "category": "secret",
+      "description": "GitHub personal access token",
+      "file": "test-cases/secret-github-token.js",
+      "expectedSeverity": "warning",
+      "shouldBlock": false
+    },
+    {
+      "id": "CLEAN-001",
+      "category": "none",
+      "description": "Clean file with no security issues (should NOT trigger)",
+      "file": "src/App.jsx",
+      "expectedSeverity": null,
+      "shouldBlock": false
+    }
+  ],
+  "summary": {
+    "totalTestCases": 19,
+    "expectedCritical": 12,
+    "expectedWarning": 5,
+    "expectedClean": 1,
+    "expectedBlocked": true,
+    "note": "This repo SHOULD be blocked by the security scanner. All critical findings are harmless test signatures, not real threats."
+  }
+}
